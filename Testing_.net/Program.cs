@@ -1,6 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using Testing_.net.Data;
 using Testing_.net.MyLogging;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<CollegeDBContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CollegeAppDBConnetion"));
+});
 
 // Add services to the container.
 
@@ -20,7 +27,7 @@ if (app.Environment.IsDevelopment())
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
         c.RoutePrefix = string.Empty;
-    });
+    }); 
 }
 
 app.UseHttpsRedirection();
